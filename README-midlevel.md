@@ -14,7 +14,7 @@ We don't expect you to spend too much of your free time on this project - aim fo
 After you submit your pull request, our team will review it within two working days. You are invited to participate in the discussion: we want you to see how it would be to work with us! :raised_hands:
 
 ### Requirements
-* Use PHP or Node.js (Typescript), preferably object-oriented
+* Use PHP, preferably object-oriented
 * Create a feature branch
 * Create a simple two-player game which the players can play by taking turns at the keyboard
 * After a user has made a move, display the current state of the game
