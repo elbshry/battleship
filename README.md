@@ -10,7 +10,7 @@ As someone who likes games, I want to have a little game which I can play with a
 We have slightly different expectations depending on what the level is of the position you are applying for - you'll find explicit directions in the README that applies to you.
 
 ### Questions?
-In case there is anything unclear about what this challenge is about, what the scope is, what our expectations are, feel free to reach out to us! cynthia.mattingly@celebrate.company or eike.niebuhr@celebrate.company
+In case there is anything unclear about what this challenge is about, what the scope is, what our expectations are, feel free to reach out to us! sebastian.thoss@celebrate.company
 
 This is not just a figure of speech but a serious offer :smiley:
 
