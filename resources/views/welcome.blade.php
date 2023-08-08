@@ -9,20 +9,30 @@
     <body>
         <div class="container">
             <h1>Battle Ship</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form class="form-horizontal" method="post" action="/play"> 
                 <div class="mb-3">
-                    <label for="p1" class="col-sm-3 control-label">Play 1 name</label>
+                    <label for="p1" class="col-sm-3 control-label">Play 1 name*</label>
                     <div class="col-sm-5">
-                    <input type="text" name="p1" id="p1" class="form-control" placeholder="Player 1">
+                    <input type="text" name="p1" id="p1" class="form-control" placeholder="Player 1" required>
                 </div>
                 </div>
                 <div class="mb-3">
-                    <label for="p2" class="col-sm-3 control-label">Play 2 name</label>
+                    <label for="p2" class="col-sm-3 control-label">Play 2 name*</label>
                     <div class="col-sm-5">
-                    <input type="text" name="p2" id="p2" class="form-control" placeholder="Player 2">
+                    <input type="text" name="p2" id="p2" class="form-control" placeholder="Player 2" required>
                 </div>
                 </div>
                   <button type="submit" class="btn btn-primary">Start Playing</button>
+                  @csrf
             </form>
         </div>
     </body>

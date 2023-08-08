@@ -15,4 +15,7 @@ In case there is anything unclear about what this challenge is about, what the s
 This is not just a figure of speech but a serious offer :smiley:
 
 ## Your results
-...
+### Hot to start the game
+cd /path-to-repository
+./vendor/bin/sail up
+Open http://localhost in your browser
