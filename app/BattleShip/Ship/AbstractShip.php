@@ -14,6 +14,11 @@ abstract class AbstractShip implements ShipInterface {
     
     private $position = [];
     private $hits = [];
+    private $name;
+    
+    public function __construct($name) {
+        $this->name = $name;
+    }
     
     public function setPosition(array $position) {
         $this->position = $position;

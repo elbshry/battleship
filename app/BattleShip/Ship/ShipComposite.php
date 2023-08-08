@@ -15,13 +15,17 @@ namespace App\BattleShip\Ship;
 class ShipComposite implements ShipInterface {
     
     private $ships;
-    
-    public function __construct() {
+    private $playerName;
+    public function __construct(string $playerName) {
+        $this->playerName = $playerName;
         $this->ships = new \SplObjectStorage();
     }
 
+    public function getPlayerName() {
+        return $this->playerName;
+    }
+    
     public function attachShip(AbstractShip $ship, $length) {
-        
         $position = $this->createShipPosition($length);
         $ship->setPosition($position);
         $this->ships->attach($ship);

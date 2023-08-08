@@ -14,9 +14,12 @@ namespace App\BattleShip\Ship;
  */
 class ShipFactory {
     
-    public static function create($type='Default') {
-        $shipCls = sprintf('\App\BattleShip\Ship\%sShip', $type);        
-        return new $shipCls();
+    public static function create($name, $type) {
+        $shipCls = sprintf('\App\BattleShip\Ship\%sShip', $type);      
+        if(!class_exists($shipCls)) {
+            throw new \InvalidArgumentException(sprintf('The ship type %s does not exist', $type));
+        }
+        return new $shipCls($name);
     }
     
 
