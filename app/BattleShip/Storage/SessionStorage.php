@@ -13,21 +13,18 @@ namespace App\BattleShip\Storage;
  */
 class SessionStorage implements StorageInterface {
 
-    public function getGameStatus() {
-        $playerOne = session('p1');
-        $playerTwo = session('p2');
-        
-        return ['p1' => $playerOne, 'p2' => $playerTwo];
+    public function getGame() {
+        $game = session('BattleShipGame');
+        return $game;
     }
 
-    public function storeGameStatus($playerOne, $playerTwo) {
-        session(['p1', $playerOne, 'p2' => $playerTwo]);
+    public function storeGame(\App\BattleShip\BattleShipGame $game) {
+        session(['BattleShipGame' => $game]);
     }
     
-    public function hasStatus() {
-        $playerOne = session('p1');
-        $playerTwo = session('p2');
+    public function hasGame() {
+        $game = session('BattleShipGame');
         
-        return $playerOne && $playerTwo;
+        return false;//$game != null;
     }
 }

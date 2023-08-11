@@ -12,21 +12,20 @@ namespace App\BattleShip\Ship;
  *
  * @author ahmedmohamed
  */
-class ShipComposite implements ShipInterface {
+class ShipComposite implements ShipCompositeInterface {
     
     private $ships;
-    private $playerName;
-    public function __construct(string $playerName) {
-        $this->playerName = $playerName;
+    private $missedHits = [];
+    
+    public function __construct() {
         $this->ships = new \SplObjectStorage();
-    }
-
-    public function getPlayerName() {
-        return $this->playerName;
     }
     
     public function attachShip(AbstractShip $ship, $length) {
         $position = $this->createShipPosition($length);
+        while (!$this->isPositionAvailable($position)) {
+            $position = $this->createShipPosition($length);
+        }
         $ship->setPosition($position);
         $this->ships->attach($ship);
     }
@@ -40,40 +39,79 @@ class ShipComposite implements ShipInterface {
         }
         return true;
     }
-
-    public function isHit(array $hitPoint) {
+    
+    public function storeHit(array $hitPoint) {
         /** @var AbstractShip $ship **/
         foreach ($this->ships as $ship) {
-            if($ship->isHit($hitPoint)) {
+            if($ship->isMatch($hitPoint)) {
                 $ship->storeHit($hitPoint);
             }
         }
     }
     
+    public function isHit(array $hitPoint) {
+        /** @var AbstractShip $ship **/
+        foreach ($this->ships as $ship) {
+            if($ship->isHit($hitPoint)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function isMatch(array $hitPoint) {
+        /** @var AbstractShip $ship **/
+        foreach ($this->ships as $ship) {
+            if($ship->isMatch($hitPoint)) {
+                return $ship->getName();
+            }
+        }
+        return false;
+    }
+    
+    public function storeMissedHit(array $hitPoint) {
+        $this->missedHits += $hitPoint;
+    }
+    
+    public function isMissedHit(array $hitPoint) {
+        return in_array($hitPoint, $this->missedHits);
+    }
+
+
+    public function getShips() {
+        return $this->ships;
+    }
+    
     private function createShipPosition($length) {
-        $startPoint = [rand(1, 10), rand(1, 10)];
+        $startPoint = [rand(1, 10) /** H **/, rand(1, 10) /** V **/];
         $newPosition = [0 => $startPoint];
         $extendDirection = rand(0, 1);
-        $fixedDirection = $extendDirection == 1 ? 0 : 1;
         for($i=1; $i<$length; $i++) {
             $newPoint = [];
-            $newPoint[$fixedDirection] = $startPoint[$fixedDirection];
-            $newPoint[$extendDirection] = $startPoint[$extendDirection] + $i;
+            if($extendDirection == 1) {
+                $newPoint[0] = $startPoint[0];
+                $newPoint[1] = $startPoint[1] + $i;
+            } else {
+                $newPoint[0] = $startPoint[0] + $i;
+                $newPoint[1] = $startPoint[1];
+            }
+            
             $newPosition[$i] = $newPoint;
         }
-        
-        while(!$this->isPositionAvailable($newPosition)) {
-            $newPosition = $this->createShipPosition($length);
-        }
-        
         return $newPosition;
     }
     
     private function isPositionAvailable($position) {
+        $currentPositions = [];
         /** @var AbstractShip $ship **/
         foreach ($this->ships as $ship) {
-            $shipPosition = $ship->getPosition();
-            if(count(array_intersect($position, $shipPosition)) > 0) {
+            $currentPositions = array_merge($currentPositions, $ship->getPosition());
+        }
+        foreach ($position as $point) {
+            if($point[0] > 10 || $point[1] > 10) {
+                return false;
+            }
+            if(in_array($point, $currentPositions)) {
                 return false;
             }
         }

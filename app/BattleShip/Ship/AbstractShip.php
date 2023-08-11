@@ -28,7 +28,7 @@ abstract class AbstractShip implements ShipInterface {
         return $this->position;
     }
     
-    public function isHit(array $hitPoint) {
+    public function isMatch(array $hitPoint) {
         return in_array($hitPoint, $this->position);
     }
     
@@ -40,5 +40,13 @@ abstract class AbstractShip implements ShipInterface {
         if(!in_array($hitPoint, $this->hits)) {
             $this->hits += $hitPoint;
         }
+    }
+
+    public function isHit(array $hitPoint) {
+        return in_array($hitPoint, $this->hits);
+    }
+    
+    public function getName() {
+        return $this->name;
     }
 }

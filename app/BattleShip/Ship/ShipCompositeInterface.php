@@ -11,18 +11,6 @@ namespace App\BattleShip\Ship;
  *
  * @author ahmedmohamed
  */
-interface ShipInterface {
-    
-    function setPosition(array $position);
-    
-    function getPosition();
-    
-    function isMatch(array $hitPoint);
-        
-    function isDestroyed();
-    
-    function storeHit(array $hitPoint);
-    
-    function isHit(array $hitPoint);
-        
+interface ShipCompositeInterface {
+    //put your code here
 }

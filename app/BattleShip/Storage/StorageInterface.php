@@ -13,10 +13,10 @@ namespace App\BattleShip\Storage;
  */
 interface StorageInterface {
     
-    function storeGameStatus();
+    function storeGame(\App\BattleShip\BattleShipGame $game);
     
-    function getGameStatus();
+    function getGame();
     
-    function hasStatus();
+    function hasGame();
     
 }

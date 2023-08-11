@@ -11,16 +11,25 @@
             <div class="row">
 				<h1>Battle Ship</h1>
 				<div class="col-sm-6">
-					Player 1: {{ $p1 }}
+					Player 1: {{ $game->getPlayerOne() }}
                                         <table class="table table-bordered">
 					@for($i=0; $i<=10; $i++)
                                         <tr>
                                             @for($j=0; $j<=10; $j++)
-                                            <td style="width: 35px">
+                                            <td style="width: 35px; background-color: 
+                                                @if($game->getPlayerOneShips()->isHit([$i, $j]))
+                                                 red;
+                                                @elseif($game->getPlayerOneShips()->isMissedHit([$i, $j]))
+                                                 white;
+                                                @else
+                                                 grey;
+                                                @endif">
                                                 @if($i == 0 && $j > 0)
                                                 {{ $j }}
                                                 @elseif($j==0 && $i > 0)
                                                 {{ $i }}
+                                                @elseif($name = $game->getPlayerOneShips()->isMatch([$i, $j]))
+                                                {{$name[0]}}
                                                 @endif
                                             </td>
                                             @endfor
@@ -29,7 +38,7 @@
 					</table>
 				</div>
 				<div class="col-sm-6">
-					Player 2: {{ $p2}}
+					Player 2: {{ $game->getPlayerTwo() }}
                                         <table class="table table-bordered">
 					@for($i=0; $i<=10; $i++)
                                         <tr>
@@ -39,6 +48,8 @@
                                                 {{ $j }}
                                                 @elseif($j==0 && $i > 0)
                                                 {{ $i }}
+                                                @elseif($name = $game->getPlayerTwoShips()->isMatch([$i, $j]))
+                                                {{$name[0]}}
                                                 @endif
                                             </td>
                                             @endfor
