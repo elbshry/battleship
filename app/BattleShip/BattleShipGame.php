@@ -17,6 +17,7 @@ class BattleShipGame {
     private $p2;
     private $p1Ships;
     private $p2Ships;
+    private $nextPlayer;
     
     public function __construct($p1, Ship\ShipComposite $p1Ships, $p2, Ship\ShipComposite $p2Ships) {
         $this->p1 = $p1;
@@ -39,5 +40,13 @@ class BattleShipGame {
         
     public function getPlayerTwoShips() {
         return $this->p2Ships;
+    }
+    
+    public function setNextPlayer($player) {
+        $this->nextPlayer = $player;
+    }
+    
+    public function getNextPlayer() {
+        return $this->nextPlayer;
     }
 }

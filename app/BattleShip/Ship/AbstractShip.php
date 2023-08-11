@@ -38,7 +38,7 @@ abstract class AbstractShip implements ShipInterface {
     
     public function storeHit($hitPoint) {
         if(!in_array($hitPoint, $this->hits)) {
-            $this->hits += $hitPoint;
+            $this->hits[] = $hitPoint;
         }
     }
 

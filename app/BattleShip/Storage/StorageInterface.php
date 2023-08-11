@@ -19,4 +19,6 @@ interface StorageInterface {
     
     function hasGame();
     
+    function destroyGame();
+    
 }

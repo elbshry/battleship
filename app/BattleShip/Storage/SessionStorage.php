@@ -25,6 +25,10 @@ class SessionStorage implements StorageInterface {
     public function hasGame() {
         $game = session('BattleShipGame');
         
-        return false;//$game != null;
+        return $game != null;
+    }
+    
+    public function destroyGame() {
+        session(['BattleShipGame' => null]);
     }
 }

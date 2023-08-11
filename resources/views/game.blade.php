@@ -5,60 +5,83 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
         <title>Battle Ship</title>
+        <style type="text/css">
+            .hit {
+                background-color: darkred!important;
+            }
+            .miss {
+                background-color: whitesmoke!important;
+            }
+            .out {
+                background-color: lightgray!important;
+                cursor: pointer;
+            }
+            .frame {
+                background-color: gray!important;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="container">
             <div class="row">
 				<h1>Battle Ship</h1>
-				<div class="col-sm-6">
-					Player 1: {{ $game->getPlayerOne() }}
-                                        <table class="table table-bordered">
-					@for($i=0; $i<=10; $i++)
-                                        <tr>
-                                            @for($j=0; $j<=10; $j++)
-                                            <td style="width: 35px; background-color: 
-                                                @if($game->getPlayerOneShips()->isHit([$i, $j]))
-                                                 red;
-                                                @elseif($game->getPlayerOneShips()->isMissedHit([$i, $j]))
-                                                 white;
-                                                @else
-                                                 grey;
-                                                @endif">
-                                                @if($i == 0 && $j > 0)
-                                                {{ $j }}
-                                                @elseif($j==0 && $i > 0)
-                                                {{ $i }}
-                                                @elseif($name = $game->getPlayerOneShips()->isMatch([$i, $j]))
-                                                {{$name[0]}}
-                                                @endif
-                                            </td>
-                                            @endfor
-                                        </tr>
-					@endfor
-					</table>
-				</div>
-				<div class="col-sm-6">
-					Player 2: {{ $game->getPlayerTwo() }}
-                                        <table class="table table-bordered">
-					@for($i=0; $i<=10; $i++)
-                                        <tr>
-                                            @for($j=0; $j<=10; $j++)
-                                            <td style="width: 35px">
-                                                @if($i == 0 && $j > 0)
-                                                {{ $j }}
-                                                @elseif($j==0 && $i > 0)
-                                                {{ $i }}
-                                                @elseif($name = $game->getPlayerTwoShips()->isMatch([$i, $j]))
-                                                {{$name[0]}}
-                                                @endif
-                                            </td>
-                                            @endfor
-                                        </tr>
-					@endfor
-					</table>
-				</div>
+				
+                                    @include('_board', ['player' => 1])
+                                    @include('_board', ['player' => 2])
             </div>
-            
+            <div class="row">
+                <a href="/reset" class="btn btn-primary">Start a new game</a>
+            </div>
         </div>
+        <script type="text/javascript">
+        $(function () {
+            $('#{{$game->getNextPlayer()}}').show();
+            $(document).on('click', '.out', function(event) {
+                if(isWon()) {
+                    alert('Game is already won, please start a new one!');
+                    return;
+                }
+                
+                let td = $(this);
+                $.ajax({
+                    url : "{{route('game.check_hit')}}",
+                    type : 'POST',
+                    data : {
+                        'i' : td.data('i'),
+                        'j' : td.data('j'),
+                        'player' : td.parents('div').first().attr('id')
+                    },
+                    dataType:'json',
+                    success : function(data) {  
+                        td.removeClass('out').addClass(data.class);
+                        if(data.won === true) {
+                            setWon();
+                            alert('Player ' + $('.' + data.currentPlayer).text() + ' won the game');
+                            return;
+                        }
+                        $('#' + data.currentPlayer).hide();
+                        $('#' + data.nextPlayer).show();
+                        alert(data.message);
+                    },
+                    error : function(request,error)
+                    {
+                        alert("Request: "+JSON.stringify(request));
+                    }
+                });
+            });
+            
+            let won = false;
+            
+            function setWon() {
+                won = true;
+            }
+
+
+            function isWon() {
+                return won;
+            }
+         });
+        </script>
     </body>
 </html>

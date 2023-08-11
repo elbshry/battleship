@@ -17,3 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::any('/play', '\App\Http\Controllers\GameController@play');
+
+Route::post('/check_hit', '\App\Http\Controllers\GameController@checkHit')->name('game.check_hit');
+
+Route::any('/reset', '\App\Http\Controllers\GameController@resetGame');

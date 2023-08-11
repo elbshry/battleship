@@ -12,5 +12,15 @@ namespace App\BattleShip\Ship;
  * @author ahmedmohamed
  */
 interface ShipCompositeInterface {
-    //put your code here
+    
+    function attachShip(AbstractShip $ship, $length);
+    
+    function isDestroyed();
+    
+    function storeHit(array $hitPoint);
+    
+    function isMatch(array $hitPoint);
+    
+    function storeMissedHit(array $hitPoint);
+    
 }

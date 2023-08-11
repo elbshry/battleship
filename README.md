@@ -18,4 +18,14 @@ This is not just a figure of speech but a serious offer :smiley:
 ### Hot to start the game
 cd /path-to-repository
 ./vendor/bin/sail up
+if the command did not work please run --composer install-- then run the command aagain
 Open http://localhost in your browser
+
+Battleship is a board game, this vedio will explain it for you
+https://www.youtube.com/watch?v=4gHJlYLomrs
+
+In case you wanted to expose the ships positions for testing purposes,
+please got to app/resources/views/_board.blade.php
+then uncomment line 22
+
+I hope you enjoy it ;)

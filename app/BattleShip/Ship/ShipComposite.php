@@ -70,7 +70,7 @@ class ShipComposite implements ShipCompositeInterface {
     }
     
     public function storeMissedHit(array $hitPoint) {
-        $this->missedHits += $hitPoint;
+        $this->missedHits[] = $hitPoint;
     }
     
     public function isMissedHit(array $hitPoint) {
