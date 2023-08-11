@@ -64,8 +64,7 @@ class GameController extends BaseController
     }
     
     private function createShips($player) {
-        //'AirCraft' => 5, 'BattleShip' => 4, 'Submarine' => 3, 'Cruiser' => 3, 
-        $ships = ['Destroyer' => 2];
+        $ships = ['AirCraft' => 5, 'BattleShip' => 4, 'Submarine' => 3, 'Cruiser' => 3, 'Destroyer' => 2];
         foreach ($ships as $name => $length) {
             $player->attachShip(\App\BattleShip\Ship\ShipFactory::create($name, 'default'), $length);
         }
