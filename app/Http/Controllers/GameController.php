@@ -12,6 +12,7 @@ class GameController extends BaseController
         /** @var \App\BattleShip\Storage\StorageInterface $storage **/
         $storage = \App\BattleShip\Storage\StorageFactory::create('session');
         if(!$storage->hasGame()) {
+            $requestToValidate = app('App\Http\Requests\PlayersRequest');
             $players = $request->except('_token');
             $playerOneShips = new \App\BattleShip\Ship\ShipComposite();
             $this->createShips($playerOneShips);
